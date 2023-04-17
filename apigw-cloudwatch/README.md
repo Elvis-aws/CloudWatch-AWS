@@ -52,3 +52,24 @@ and check the log group that is created. The name will be in the outputs. You wi
     ```bash
     aws cloudformation list-stacks --query "StackSummaries[?contains(StackName,'STACK_NAME')].StackStatus"
     ```
+   
+
+
+# Available Commands
+sam build
+sam delete
+sam deploy
+sam init
+sam list
+sam local generate-event
+sam local invoke
+sam local start-api
+sam local start-lambda
+sam logs
+sam package
+sam pipeline bootstrap
+sam pipeline init
+sam publish
+sam sync
+sam traces
+sam validate

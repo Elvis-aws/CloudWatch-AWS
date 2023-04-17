@@ -23,7 +23,43 @@ Resources:
         - !Sub "arn:${AWS::Partition}:iam::aws:policy/service-role/AmazonAPIGatewayPushToCloudWatchLogs"
   # Log group
   MyLogGroup:
-    Type: AWS::Logs::LogGroup
+    Type: "AWS::Logs::LogGroup"
+    Properties:
+      LogGroupName: demo-apigateway-log-group
+
+  # Alarm
+  MyApiGatewayAlarm:
+    Type: "AWS::CloudWatch::Alarm"
+    Properties:
+      AlarmDescription: "API Gateway Latency Alarm"
+      AlarmActions:
+        - !Ref MySNSTopic
+      MetricName: "Latency"
+      Namespace: "AWS/ApiGateway"
+      Dimensions:
+        - Name: "ApiName"
+          Value: "MyApi"
+        - Name: "Stage"
+          Value: "prod"
+      Statistic: "Average"
+      Period: "60"
+      EvaluationPeriods: "5"
+      Threshold: "500"
+      ComparisonOperator: "GreaterThanThreshold"
+
+  # SNS Topic
+  MySNSTopic:
+    Type: "AWS::SNS::Topic"
+    Properties:
+      DisplayName: "My SNS Topic"
+
+  # Subscription
+  MySNSSubscription:
+    Type: "AWS::SNS::Subscription"
+    Properties:
+      Protocol: "email"
+      TopicArn: !Ref MySNSTopic
+      Endpoint: "ngwesseaws@gmail.com"
 
   # Amazon API gateway REST API
   MyApi: 
