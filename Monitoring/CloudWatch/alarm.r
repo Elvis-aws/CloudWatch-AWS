@@ -21,14 +21,3 @@ CloudWatch alarms
           to a threshold over a number of time periods
         - The action can be sending a notification to an Amazon SNS topic, performing an Amazon EC2 
           action or an Amazon EC2 Auto Scaling action
-    ***************
-    Composite Alarm
-    ***************
-        - A composite alarm includes a rule expression that takes into account the alarm states of other 
-          alarms
-        - The composite alarm goes into ALARM state only if all conditions of the rule are met
-        - The alarms specified in a composite alarms rule expression can include metric alarms and other 
-          composite alarms
-        - Using composite alarms can reduce alarm noise
-        - You can create multiple metric alarms, and also create a composite alarm and set up alerts only 
-          for the composite alarm

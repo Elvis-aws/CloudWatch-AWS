@@ -28,11 +28,12 @@ Creating an Alarm
             - Greater/Equal
             - Lower/Equal
             - Lower
-        - Set period to 1 minute and threshold to 5
+        - Set period to 1 minute and threshold to 5 (This always has to be configured before we can set additional
+          configuration)
         - Additional configuration
             - Time period and Data points
                 - If we have data point and time period of 1:1, this implies we are going to evaluate our alarm
-                  every i minute for 5 errors
+                  every 1 minute for 5 errors
                 - If we change the configuration to 3:5, then this implies there shall be an evaluation of 5 minutes
                   behind (lets say we are at the 7 th minute, then we shall evaluate from 3-7 minutes back). Remember
                   we set our threshold to 5 errors. Now looking at data points, if we have 1 data point set, the alarm

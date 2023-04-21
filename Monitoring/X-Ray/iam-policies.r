@@ -34,7 +34,7 @@ IAM managed policies for X-Ray
     AWSXrayReadOnlyAccess
     *********************
         - Read permissions for using the X-Ray console, AWS CLI, or AWS SDK to get trace data and service maps 
-        from the X-Ray API
+          from the X-Ray API
 
 {
     "Version": "2012-10-17",
