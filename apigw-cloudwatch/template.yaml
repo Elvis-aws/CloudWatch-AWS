@@ -42,10 +42,18 @@ Resources:
         - Name: "Stage"
           Value: "prod"
       Statistic: "Average"
-      Period: "60"
-      EvaluationPeriods: "5"
-      Threshold: "500"
+      TreatMissingData: "notBreaching"
       ComparisonOperator: "GreaterThanThreshold"
+      Period: "60"  # The period, in seconds, over which the statistic is applied. If we have 240, then the alarm will
+                    # will be evaluated every 4 minutes
+      Threshold: "5" # The value to compare with the specified statistic. This is the value the datapoint should not
+                     # exceed or else the alarm will be breached and go to alarm state
+      EvaluationPeriods: "5" # The number of periods over which data is compared to the specified threshold. If we set
+                             # this to 7, this implies we shall be evaluating data from now 7 minutes behind. Let's say
+                             # the time is 1:30pm, the evaluation period will be between 1:23pm-1:30pm
+      DatapointsToAlarm: "1" # The number of datapoints that must be breaching to trigger the alarm. Remember our
+                             # threshold value is 5. If we set datapoints to 2, then the alarm will only be breached if
+                             # threshold value is 7.
 
   # SNS Topic
   MySNSTopic:
@@ -67,11 +75,18 @@ Resources:
     DependsOn: ApiGwAccountConfig
     Properties: 
       StageName: Prod
+      CacheClusterEnabled: true
+      CacheClusterSize: '0.5'
+      # Allows www.example.com to call these APIs
+      # SAM will automatically add AllowMethods with a list of methods for this API
+      Cors: "'www.example.com'"
       MethodSettings:
         - LoggingLevel: INFO
           MetricsEnabled: True
           ResourcePath: '/*' # allows for logging on any resource
           HttpMethod: '*' # allows for logging on any method
+          CachingEnabled: true
+          CacheTtlInSeconds: 10
       EndpointConfiguration: REGIONAL
       TracingEnabled: true # Enable tracing with Amazon X-Ray
       AccessLogSetting: # Enable access logging with Amazon CloudWatch
